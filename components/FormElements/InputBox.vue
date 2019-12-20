@@ -1,16 +1,16 @@
 <template>
   <div>
       <div class="mb-4">
-        <label class="block flex text-teal-500 text-2xl font-bold mb-2" for="username">
+        <label class="block flex text-teal-500 text-3xl font-bold mb-2" for="username">
           <span class="ml-2">{{ message }}</span>
         </label>
       </div>
       <input
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="text-4xl appearance-none text-blue-800 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
         id="username"
         :type="type"
         :value="value"
-        placeholder=""
+        ref="input"
         @input="$emit('handleAnswer', $event.target.value)"
       >
   </div>
@@ -31,6 +31,9 @@ export default {
       type: String,
       required: true
     }
+  },
+  mounted () {
+    this.$nextTick(()=> this.$refs.input.focus())
   }
 }
 </script>

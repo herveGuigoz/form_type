@@ -1,24 +1,30 @@
 <template>
   <div class="w-full h-screen flex flex-col items-center justify-end">
-    <div v-if="isCompleted" class="w-full max-w-xl h-full flex flex-col justify-center">
-      <div v-for="(question, index) in questions" :key="index" class="text-teal-500 text-2xl">
-        <span>{{ question.value }} : </span>
-        <span>{{ question.answer }}</span>
+    <transition name="next" mode="out-in">
+      <div v-if="isCompleted" class="w-full max-w-xl ml-10 h-full flex flex-col justify-center">
+        <div v-for="(question, index) in questions" :key="index" class="text-teal-500 text-2xl">
+          <span>{{ question.value }} : </span>
+          <span>{{ question.answer }}</span>
+        </div>
       </div>
-    </div>
+    </transition>
     <div v-if="!isCompleted" class="w-full max-w-xl h-full flex flex-col justify-center">
       <form
         @submit.prevent="next"
-        class="rounded px-8 pt-8 pb-8 mb-4 mx-4"
+        autocomplete="off"
+        class="rounded px-8 pb-8 mx-4 -mt-10"
       >
-        <transition name="slide-up">
+        <transition :name="currentTransition" mode="out-in">
           <component
-            :is="formsTypeComponents"
-            :type="questions[currentQuestion].type"
-            :message="questions[currentQuestion].value"
-            :value="questions[currentQuestion].answer"
-            @handleAnswer="handleAnswer"
-          ></component>
+              :is="formsTypeComponents"
+              :key="currentQuestion"
+              enter-active-class="fadeIn"
+              leave-active-class="fadeOut"
+              :type="questions[currentQuestion].type"
+              :message="questions[currentQuestion].value"
+              :value="questions[currentQuestion].answer"
+              @handleAnswer="handleAnswer"
+            ></component>
         </transition>
       </form>
       <div class="flex justify-center">
@@ -33,6 +39,14 @@
         </transition>
       </div>
     </div>
+    <div class="w-full flex px-2 mb-1">
+      <div @click="previous">
+        <go-back-icon :isAvailaible="currentQuestion !== 0 && !isCompleted"/>
+      </div>
+      <div @click="next">
+        <go-foward-icon :isAvailaible="isInputValid && !isCompleted"/>
+      </div>
+    </div>
     <div class="w-full px-2">
       <progress-bar :percentage="contentProgress" class="mb-2 h-5">
         <span class="text-xs text-white w-full flex justify-end pr-2">{{contentProgress}}%</span>
@@ -44,14 +58,19 @@
 <script>
 import InputBox from "../components/FormElements/InputBox";
 import ProgressBar from "../components/ProgressBar";
+import GoBackIcon from '../components/GoBackIcon'
+import GoFowardIcon from '../components/GoFowardIcon'
 export default {
   components: {
     InputBox,
-    ProgressBar
+    ProgressBar,
+    GoBackIcon,
+    GoFowardIcon
   },
   data() {
     return {
       isCompleted: false,
+      currentTransition: '',
       currentQuestion: 0,
       questions: [
         {
@@ -66,7 +85,7 @@ export default {
         },
         {
           type: 'text',
-          value: 'Ca te rend heureux ?',
+          value: 'As tu fais tout tes cadeaux ?',
           answer: ''
         }
       ]
@@ -92,6 +111,13 @@ export default {
     handleAnswer(answer) {
       this.questions[this.currentQuestion].answer = answer
     },
+    previous() {
+      if (this.currentQuestion === 0) {
+        return
+      }
+      this.currentTransition = 'prev'
+      this.currentQuestion--
+    },
     next () {
       if (!this.isInputValid) {
         return
@@ -100,6 +126,7 @@ export default {
         this.isCompleted = true
         return
       }
+      this.currentTransition = 'next'
       this.currentQuestion++
     }
   }
@@ -117,5 +144,34 @@ export default {
     /* .slide-fade-leave-active below version 2.1.8 */ {
     transform: translateY(20px);
     opacity: 0;
+  }
+
+  /* prefixed with "next" so the next button easily changes to this block of CSS */
+  .next-enter { opacity: 0; transform: scale3d(2, 0.5, 1) translate3d(400px, 0, 0); }
+  .next-enter-to { transform: scale3d(1, 1, 1); }
+  .next-enter-active,
+  .next-leave-active { transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+  .next-leave { transform: scale3d(1, 1, 1); }
+  .next-leave-to { opacity: 0; transform: scale3d(2, 0.5, 1) translate3d(-400px, 0, 0); }
+
+  /* prefixed with "prev" so the prev button easily changes to this block of CSS */
+  .prev-enter { opacity: 0; transform: scale3d(2, 0.5, 1) translate3d(-400px, 0, 0); }
+  .prev-enter-to { transform: scale3d(1, 1, 1); }
+  .prev-enter-active,
+  .prev-leave-active { transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+  .prev-leave { transform: scale3d(1, 1, 1); }
+  .prev-leave-to { opacity: 0; transform: scale3d(2, 0.5, 1) translate3d(400px, 0, 0); }
+
+  /* if animations are reduced at the OS level, use simpler transitions */
+  @media screen and (prefers-reduced-motion: reduce) {
+    .next-enter { opacity: 0; transform: translate3d(100px, 0, 0); }
+    .next-enter-active,
+    .next-leave-active { transition: 0.5s; }
+    .next-leave-to { opacity: 0; transform: translate3d(-100px, 0, 0); }
+
+    .prev-enter { opacity: 0; transform: translate3d(-100px, 0, 0); }
+    .prev-enter-active,
+    .prev-leave-active { transition: 0.5s; }
+    .prev-leave-to { opacity: 0; transform: translate3d(100px, 0, 0); }
   }
 </style>
