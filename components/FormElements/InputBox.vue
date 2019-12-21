@@ -1,13 +1,13 @@
 <template>
   <div>
       <div class="mb-4">
-        <label class="block flex text-teal-500 text-3xl font-bold mb-2" for="username">
+        <label class="block flex text-teal-500 text-3xl font-bold mb-2" for="input">
           <span class="ml-2">{{ message }}</span>
         </label>
       </div>
       <input
         class="text-4xl appearance-none text-blue-800 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-        id="username"
+        id="input"
         :type="type"
         :value="value"
         ref="input"

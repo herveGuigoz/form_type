@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full h-screen flex flex-col items-center justify-end">
-    <div v-if="!isCompleted" class="w-full max-w-xl h-full flex flex-col justify-center">
+  <div @click="keepFocus(true)" class="w-full h-screen flex flex-col items-center justify-end">
+    <div v-if="!isCompleted" class="w-full max-w-3xl h-full flex flex-col justify-center">
       <form
         @submit.prevent="next"
         autocomplete="off"
@@ -10,6 +10,7 @@
           <component
               :is="formsTypeComponents"
               :key="currentQuestion"
+              ref="formElmt"
               enter-active-class="fadeIn"
               leave-active-class="fadeOut"
               :type="questions[currentQuestion].type"
@@ -24,9 +25,9 @@
           <button
             v-if="isInputValid"
             class="absolute bg-transparent hover:bg-teal-500 text-teal-500 font-semibold hover:text-white py-2 px-6 border border-teal-500 hover:border-transparent rounded"
-            @click="next"
+            @click="keepFocus(false)"
           >
-            Ok
+            Suivant
           </button>
         </transition>
       </div>
@@ -48,6 +49,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import InputBox from "../components/FormElements/InputBox";
 import ProgressBar from "../components/ProgressBar";
 import GoBackIcon from '../components/GoBackIcon'
@@ -61,32 +63,9 @@ export default {
   },
   data() {
     return {
-      isLoading:true,
       isCompleted: false,
       currentTransition: '',
       currentQuestion: 0,
-      questions: [
-        {
-          type: 'text',
-          value: 'Salut comment ca va ?',
-          answer: ''
-        },
-        {
-          type: 'text',
-          value: 'Alors bientot noel ?',
-          answer: ''
-        },
-        {
-          type: 'text',
-          value: 'As tu fais tout tes cadeaux ?',
-          answer: ''
-        },
-        {
-          type: 'text',
-          value: 'Merci d\'indiquer votre email',
-          answer: ''
-        }
-      ]
     }
   },
   computed: {
@@ -103,11 +82,26 @@ export default {
     },
     isInputValid() {
       return this.questions[this.currentQuestion].answer.length > 0
-    }
+    },
+    ...mapState({
+      questions: state => state.questions,
+    })
   },
   methods: {
-    handleAnswer(answer) {
-      this.questions[this.currentQuestion].answer = answer
+    keepFocus (bool) {
+      if (!bool) {
+        this.next()
+        return
+      }
+      try {
+        this.$refs.formElmt.$refs.input.focus()
+      } catch(e) {
+        return
+      }
+      
+    },
+    handleAnswer (answer) {
+      this.$store.commit('SET_ANSWER', { index: this.currentQuestion, answer})
     },
     previous() {
       if (this.currentQuestion === 0) {

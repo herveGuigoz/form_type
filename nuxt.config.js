@@ -24,7 +24,7 @@ export default {
   */
   css: [
   ],
-  transition: {
+  pageTransition: {
     name: 'fade',
     mode: 'out-in'
   },
