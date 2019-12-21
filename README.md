@@ -1,4 +1,4 @@
-# typeFrom Clone
+# Proof of concept | typeFrom Clone
 
 ## Requirement
 
