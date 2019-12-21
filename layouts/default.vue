@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <nuxt />
+    <a class="text-xs text-gray-500 absolute bottom-0 right-0 cursor-pointer">@herveGuigoz 2019</a>
   </div>
 </template>
 

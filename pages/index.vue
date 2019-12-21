@@ -40,7 +40,7 @@
         <go-foward-icon :isAvailaible="isInputValid && !isCompleted"/>
       </div>
     </div>
-    <div class="w-full px-2">
+    <div class="w-full px-2 mb-2">
       <progress-bar :percentage="contentProgress" class="mb-2 h-5">
         <span class="text-xs text-white w-full flex justify-end pr-2">{{contentProgress}}%</span>
       </progress-bar>
