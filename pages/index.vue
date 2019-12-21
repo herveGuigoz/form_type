@@ -66,12 +66,14 @@ export default {
       isCompleted: false,
       currentTransition: '',
       currentQuestion: 0,
+      // on netlify progress bar dont work ?
+      totalQuestion: this.$store.state.questions.length
     }
   },
   computed: {
     contentProgress() {
       if (!this.isCompleted) {
-        return Math.round(this.currentQuestion/ this.questions.length * 100)
+        return Math.round(this.currentQuestion/ this.totalQuestion * 100)
       }
       return 100
     },
