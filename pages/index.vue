@@ -73,7 +73,9 @@ export default {
   computed: {
     contentProgress() {
       if (!this.isCompleted) {
-        return Math.round(this.currentQuestion/ this.totalQuestion * 100)
+        // return Math.round(this.currentQuestion/ this.totalQuestion * 100)
+        console.log(this.totalQuestion)
+        return 25
       }
       return 100
     },
