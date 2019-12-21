@@ -45,6 +45,7 @@ export default {
   */
   modules: [
     '@nuxtjs/axios',
+    '@bazzite/nuxt-netlify'
   ],
   axios: {
     baseURL: 'https://form-type.firebaseio.com'

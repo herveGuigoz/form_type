@@ -11,6 +11,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@bazzite/nuxt-netlify": "^0.1.1",
     "@nuxtjs/axios": "^5.9.0",
     "nuxt": "^2.0.0"
   },
