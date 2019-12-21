@@ -1,5 +1,5 @@
 <template>
-  <div @click="keepFocus(true)" class="w-full h-screen flex flex-col items-center justify-end">
+  <div @click="keepFocus(true)" class="w-full h-screen flex flex-col items-center justify-end pb-12 sm:pb-0">
     <div v-if="!isCompleted" class="w-full max-w-3xl h-full flex flex-col justify-center">
       <form
         @submit.prevent="next"
