@@ -4,7 +4,7 @@
       <form
         @submit.prevent="next"
         autocomplete="off"
-        class="rounded px-8 pb-8 mx-4 -mt-10"
+        class="rounded px-8 pb-8 mx-4 h-56"
       >
         <transition :name="currentTransition" mode="out-in">
           <component
@@ -24,7 +24,7 @@
         <transition name="slide-up">
           <button
             v-if="isInputValid"
-            class="absolute bg-transparent hover:bg-teal-500 text-teal-500 font-semibold hover:text-white py-2 px-6 border border-teal-500 hover:border-transparent rounded"
+            class="absolute mt-10 bg-transparent hover:bg-teal-500 text-teal-500 font-semibold hover:text-white py-2 px-6 border border-teal-500 hover:border-transparent rounded"
             @click="keepFocus(false)"
           >
             Suivant
@@ -51,12 +51,14 @@
 <script>
 import { mapState } from 'vuex'
 import InputBox from "../components/FormElements/InputBox";
+import TextArea from "../components/FormElements/TextArea";
 import ProgressBar from "../components/ProgressBar";
 import GoBackIcon from '../components/GoBackIcon'
 import GoFowardIcon from '../components/GoFowardIcon'
 export default {
   components: {
     InputBox,
+    TextArea,
     ProgressBar,
     GoBackIcon,
     GoFowardIcon
@@ -66,22 +68,22 @@ export default {
       isCompleted: false,
       currentTransition: '',
       currentQuestion: 0,
-      // on netlify progress bar dont work ?
       totalQuestion: this.$store.state.questions.length
     }
   },
   computed: {
     contentProgress() {
       if (!this.isCompleted) {
-        // return Math.round(this.currentQuestion/ this.totalQuestion * 100)
-        console.log(this.totalQuestion)
-        return 25
+        return Math.round(this.currentQuestion/ this.totalQuestion * 100)
       }
       return 100
     },
     formsTypeComponents() {
       if (this.questions[this.currentQuestion].type === 'text') {
         return 'InputBox'
+      }
+      if (this.questions[this.currentQuestion].type === 'textarea') {
+        return 'TextArea'
       }
     },
     isInputValid() {

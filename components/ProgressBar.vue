@@ -5,14 +5,15 @@
   >
     <div
       class="h-full progressbar"
-      :class="[`bg-${color}-500`, {'absolute top-0': indeterminate}, {'rounded-full': rounded}]"
+      :class="[{'absolute top-0': indeterminate}, {'rounded-full': rounded}]"
       role="progressbar"
+      style="background-color: #38b2ac;"
       :style="{width: `${percentage}%`}"
       :aria-valuenow="percentage"
       aria-valuemin="0"
       aria-valuemax="100"
     >
-      <span class="flex items-center h-full">
+      <span class="flex items-center h-full bg-teal-500">
         <slot></slot>
       </span>
     </div>
@@ -22,10 +23,6 @@
   export default {
     inheritAttrs: false,
     props: {
-      color: {
-        type: String,
-        default: "teal"
-      },
       percentage: {
         type: Number,
         default: 0

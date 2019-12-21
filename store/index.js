@@ -2,7 +2,7 @@
 export const state = () => ({
   questions: [
     {
-      type: 'text',
+      type: 'textarea',
       value: 'Salut comment ça va ?',
       answer: ''
     },

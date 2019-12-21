@@ -5,14 +5,13 @@
           <span class="ml-2">{{ message }}</span>
         </label>
       </div>
-      <input
-        class="text-4xl bg-transparent appearance-none text-blue-800 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+      <textarea
+        class="resize-none h-full bg-transparent text-4xl appearance-none text-blue-800 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
         id="input"
-        :type="type"
         :value="value"
         ref="input"
         @input="$emit('handleAnswer', $event.target.value)"
-      >
+      />
   </div>
 </template>
 
