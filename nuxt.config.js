@@ -46,6 +46,9 @@ export default {
   modules: [
     '@nuxtjs/axios',
   ],
+  axios: {
+    baseURL: 'https://form-type.firebaseio.com'
+  },
   /*
   ** Build configuration
   */

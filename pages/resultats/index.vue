@@ -29,7 +29,7 @@ export default {
     }
   },
   mounted () {
-    this.$axios.get('https://form-type.firebaseio.com/questionnaire.json')
+    this.$axios.get('/questionnaire.json')
       .then((response) => {
         this.data = response.data
       })

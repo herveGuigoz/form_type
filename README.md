@@ -1,6 +1,19 @@
-# form_type_pwa
+# typeFrom Clone
 
-> formType template
+## Requirement
+
+* Node
+* Yarn
+
+> this exemple project use Firebase storage. 
+
+## Config
+
+* Edit **baseURL** value in `nuxt.config.js` with your firebase project url
+
+## Questions Setup
+
+* Edit / add / remove `questions` in `index.js` under `/store` directory
 
 ## Build Setup
 
@@ -19,4 +32,7 @@ $ yarn start
 $ yarn generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## Documentation
+
+[Nuxt.js docs](https://nuxtjs.org).
+

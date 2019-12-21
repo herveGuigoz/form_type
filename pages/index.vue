@@ -129,7 +129,7 @@ export default {
         Question3: this.questions[2].answer,
         email: this.questions[3].answer
       }
-      const response = await this.$axios.post('https://form-type.firebaseio.com/questionnaire.json', data)
+      const response = await this.$axios.post('/questionnaire.json', data)
       this.$router.push('/thanks')
     }
   }
