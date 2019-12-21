@@ -1,13 +1,5 @@
 <template>
   <div class="w-full h-screen flex flex-col items-center justify-end">
-    <transition name="next" mode="out-in">
-      <div v-if="isCompleted" class="w-full max-w-xl ml-10 h-full flex flex-col justify-center">
-        <div v-for="(question, index) in questions" :key="index" class="text-teal-500 text-2xl">
-          <span>{{ question.value }} : </span>
-          <span>{{ question.answer }}</span>
-        </div>
-      </div>
-    </transition>
     <div v-if="!isCompleted" class="w-full max-w-xl h-full flex flex-col justify-center">
       <form
         @submit.prevent="next"
@@ -69,6 +61,7 @@ export default {
   },
   data() {
     return {
+      isLoading:true,
       isCompleted: false,
       currentTransition: '',
       currentQuestion: 0,
@@ -86,6 +79,11 @@ export default {
         {
           type: 'text',
           value: 'As tu fais tout tes cadeaux ?',
+          answer: ''
+        },
+        {
+          type: 'text',
+          value: 'Merci d\'indiquer votre email',
           answer: ''
         }
       ]
@@ -124,10 +122,21 @@ export default {
       }
       if (this.questions.length === this.currentQuestion + 1) {
         this.isCompleted = true
+        this.postData()
         return
       }
       this.currentTransition = 'next'
       this.currentQuestion++
+    },
+    async postData() {
+      const data = {
+        Question1: this.questions[0].answer,
+        Question2: this.questions[1].answer,
+        Question3: this.questions[2].answer,
+        email: this.questions[3].answer
+      }
+      const response = await this.$axios.post('https://form-type.firebaseio.com/questionnaire.json', data)
+      this.$router.push('/thanks')
     }
   }
 }
