@@ -6,6 +6,7 @@
         </label>
       </div>
       <input
+        v-focus
         class="text-4xl bg-transparent appearance-none text-blue-800 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
         id="input"
         :type="type"
@@ -32,9 +33,16 @@ export default {
       required: true
     }
   },
+  directives: {
+    focus: {
+      inserted: (el) => el.focus()
+    }
+  }
+  /*
   mounted () {
     this.$nextTick(()=> this.$refs.input.focus())
   }
+  */
 }
 </script>
 <style scoped>

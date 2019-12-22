@@ -16,6 +16,7 @@
               :type="questions[currentQuestion].type"
               :message="questions[currentQuestion].value"
               :value="questions[currentQuestion].answer"
+              :options="questions[currentQuestion].type === 'radio' || questions[currentQuestion].type === 'check' ? questions[currentQuestion].options : null"
               @handleAnswer="handleAnswer"
             ></component>
         </transition>
@@ -51,14 +52,18 @@
 <script>
 import { mapState } from 'vuex'
 import InputBox from "../components/FormElements/InputBox";
+import CheckBox from "../components/FormElements/CheckBox";
 import TextArea from "../components/FormElements/TextArea";
+import RadioButton from "../components/FormElements/RadioButton";
 import ProgressBar from "../components/ProgressBar";
 import GoBackIcon from '../components/GoBackIcon'
 import GoFowardIcon from '../components/GoFowardIcon'
 export default {
   components: {
     InputBox,
+    CheckBox,
     TextArea,
+    RadioButton,
     ProgressBar,
     GoBackIcon,
     GoFowardIcon
@@ -84,6 +89,12 @@ export default {
       }
       if (this.questions[this.currentQuestion].type === 'textarea') {
         return 'TextArea'
+      }
+      if (this.questions[this.currentQuestion].type === 'radio') {
+        return 'RadioButton'
+      }
+      if (this.questions[this.currentQuestion].type === 'check') {
+        return 'CheckBox'
       }
     },
     isInputValid() {

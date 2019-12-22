@@ -6,6 +6,7 @@
         </label>
       </div>
       <textarea
+        v-focus
         class="resize-none h-full bg-transparent text-4xl appearance-none text-blue-800 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
         id="input"
         :value="value"
@@ -31,8 +32,10 @@ export default {
       required: true
     }
   },
-  mounted () {
-    this.$nextTick(()=> this.$refs.input.focus())
+  directives: {
+    focus: {
+      inserted: (el) => el.focus()
+    }
   }
 }
 </script>

@@ -20,3 +20,15 @@ input:focus {
 .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+@media only screen and (orientation: portrait) {
+  input[type="text"] {
+    font-size: 1.4em;
+  }
+  textarea {
+    font-size: 1.2em;
+  }
+}

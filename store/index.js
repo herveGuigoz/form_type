@@ -1,18 +1,36 @@
-// State object
+/*
+  State object where you define questions to ask
+
+  possible type of questions :
+    text -> single an shot line of text
+    textarea -> long text with multi lines allowed
+    check -> checkbox with multiples responses
+    radio -> checbok with only one response
+  
+  You have to respect this structure:
+  {
+    type: 'text' or 'textarea' or 'radio' or 'check'
+    value: 'message to display',
+    answer: '' or [], // FOR 'check' TYPE ANSWER WILL BE AN ARRAY
+    options: [] // ONLY FOR 'check' OR 'radio' TYPES
+  }
+*/
 export const state = () => ({
   questions: [
     {
-      type: 'textarea',
+      type: 'check',
       value: 'Salut comment ça va ?',
-      answer: ''
+      answer: [],
+      options: ['Trés bien', 'Bien', 'Moyen'],
     },
     {
-      type: 'text',
-      value: 'Alors comme ça on code ?',
-      answer: ''
+      type: 'radio',
+      value: 'Tu as fais tes cadeaux de noel ?',
+      answer: '',
+      options: ['Oui', 'Non', 'En partie'],
     },
     {
-      type: 'text',
+      type: 'textarea',
       value: 'Ok une dernière question, tu as quelque chose à ajouter ?',
       answer: ''
     },
