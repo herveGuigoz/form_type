@@ -16,7 +16,7 @@
               :type="questions[currentQuestion].type"
               :message="questions[currentQuestion].value"
               :value="questions[currentQuestion].answer"
-              :options="questions[currentQuestion].type === 'radio' || questions[currentQuestion].type === 'check' ? questions[currentQuestion].options : null"
+              :options="questions[currentQuestion].options || null"
               @handleAnswer="handleAnswer"
             ></component>
         </transition>
@@ -25,7 +25,7 @@
         <transition name="slide-up">
           <button
             v-if="isInputValid"
-            class="absolute mt-10 bg-transparent hover:bg-teal-500 text-teal-500 font-semibold hover:text-white py-2 px-6 border border-teal-500 hover:border-transparent rounded"
+            class="absolute mt-5 bg-transparent hover:bg-teal-500 text-teal-500 font-semibold hover:text-white py-2 px-6 border border-teal-500 hover:border-transparent rounded"
             @click="keepFocus(false)"
           >
             Suivant
@@ -167,31 +167,18 @@ export default {
   }
 
   /* prefixed with "next" so the next button easily changes to this block of CSS */
-  .next-enter { opacity: 0; transform: scale3d(2, 0.5, 1) translate3d(400px, 0, 0); }
-  .next-enter-to { transform: scale3d(1, 1, 1); }
+  .next-enter { opacity: 0; transform: translateY(400px); }
+  .next-enter-to { opacity: 1; }
   .next-enter-active,
-  .next-leave-active { transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-  .next-leave { transform: scale3d(1, 1, 1); }
-  .next-leave-to { opacity: 0; transform: scale3d(2, 0.5, 1) translate3d(-400px, 0, 0); }
-
+  .next-leave-active { transition: all .4s ease; }
+  .next-leave { opacity: 1; }
+  .next-leave-to { opacity: 0; transform: translateY(-400px); }
+  
   /* prefixed with "prev" so the prev button easily changes to this block of CSS */
-  .prev-enter { opacity: 0; transform: scale3d(2, 0.5, 1) translate3d(-400px, 0, 0); }
-  .prev-enter-to { transform: scale3d(1, 1, 1); }
+  .prev-enter { opacity: 0; transform: translateY(-400px); }
+  .prev-enter-to { opacity: 1; }
   .prev-enter-active,
-  .prev-leave-active { transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-  .prev-leave { transform: scale3d(1, 1, 1); }
-  .prev-leave-to { opacity: 0; transform: scale3d(2, 0.5, 1) translate3d(400px, 0, 0); }
-
-  /* if animations are reduced at the OS level, use simpler transitions */
-  @media screen and (prefers-reduced-motion: reduce) {
-    .next-enter { opacity: 0; transform: translate3d(100px, 0, 0); }
-    .next-enter-active,
-    .next-leave-active { transition: 0.5s; }
-    .next-leave-to { opacity: 0; transform: translate3d(-100px, 0, 0); }
-
-    .prev-enter { opacity: 0; transform: translate3d(-100px, 0, 0); }
-    .prev-enter-active,
-    .prev-leave-active { transition: 0.5s; }
-    .prev-leave-to { opacity: 0; transform: translate3d(100px, 0, 0); }
-  }
+  .prev-leave-active { transition: all .4s ease; }
+  .prev-leave { opacity: 1; }
+  .prev-leave-to { opacity: 0; transform: translateY(400px); }
 </style>
